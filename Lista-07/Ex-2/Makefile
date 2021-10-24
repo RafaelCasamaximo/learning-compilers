@@ -4,7 +4,7 @@ CC=gcc
 CFLAGS=
 LIBS=
 
-PROGRAMA = programa
+PROGRAMA = l7e2
 LEXICO = lexico.l
 
 $(PROGRAMA): $(LEXICO)
