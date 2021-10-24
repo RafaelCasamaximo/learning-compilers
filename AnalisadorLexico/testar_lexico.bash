@@ -91,11 +91,15 @@ function DrawTrophy
     echo -e "     \e[30;48;5;11m     \e[43m      \e[30;48;5;11m     \e[49m\e[39m     "
     echo -ne "       \e[30;48;5;11m            \e[49m\e[39m       "
     echo -e "      Parabens!!!"
-    echo -ne "        \e[30;48;5;11m          \e[49m\e[3
--e Para que o processo de compilacao do analisador lexico
--e seja possivel, eh necessario que as seguintes ferramentas
--e estejam instaladas no seu computador:
--e          "
+    echo -ne "        \e[30;48;5;11m          \e[49m\e[39m        "
+    echo -e "      Voce Acertou Todos os Testes!!!"
+    echo -e "         \e[30;48;5;11m        \e[49m\e[39m         "
+    echo -e "          \e[30;48;5;11m      \e[49m\e[39m          "
+    echo -e "           \e[30;48;5;11m    \e[49m\e[39m           "
+    echo -e "            \e[30;48;5;11m  \e[49m\e[39m            "
+    echo -e "            \e[30;48;5;11m  \e[49m\e[39m            "
+    echo -e "            \e[30;48;5;11m  \e[49m\e[39m            "
+    echo -e "           \e[30;48;5;11m    \e[49m\e[39m           "
     echo -e "          \e[30;48;5;11m      \e[49m\e[39m          "
     echo -e "        \e[30;48;5;11m          \e[49m\e[39m        "
     echo -e "       \e[30;48;5;11m            \e[49m\e[39m       "
