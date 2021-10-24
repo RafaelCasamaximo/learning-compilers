@@ -26,9 +26,18 @@ int main(){
     };
     vector<int> final_states{2, 3, 4, 5, 8};
 
+    string inputAux;
+    string input; 
+    while (getline(cin, inputAux))
+    {
+        input = input.append(inputAux);
+    }
+
+    cout << "---------------------" << endl;
+
     Automata automata(symbols, states, 1, final_states);
     Lexer lexer(automata);
-    lexer.scan("sandra e gabriel");
+    lexer.scan(input);
 
     return 0;
 }

@@ -1,6 +1,6 @@
 
 output: main.o automata.o lexer.o
-	g++ main.o automata.o lexer.o -o l5e1
+	g++ main.o automata.o lexer.o -o l5e2
 
 main.o: main.cpp
 	g++ -c -std=c++11 main.cpp
