@@ -10,7 +10,8 @@ extern int total_lines;
 extern int total_chars;
 FILE* inputFile = NULL;
 
-void printPosFinder(FILE* auxFile, int aux){
+void printPosFinder(FILE* auxFile, int aux)
+{
 
 	int i = 1;
 	char character;
@@ -35,6 +36,11 @@ void printPosFinder(FILE* auxFile, int aux){
 		character = fgetc(auxFile);
 	}
 	printf("\n");
+}
+
+void success()
+{
+	printf("SUCCESSFUL COMPILATION.");
 }
 
 %}
@@ -126,16 +132,16 @@ void printPosFinder(FILE* auxFile, int aux){
 %token OTHER 					// Não Utilizado
 %token END_OF_FILE
 
-%start programa
+%start programaStart
 
 %%
 
-programa: prog programa END_OF_FILE																									{printf("SUCCESSFUL COMPILATION."); return 0;}
-		| prog END_OF_FILE		    																								{printf("SUCCESSFUL COMPILATION."); return 0;}
+programaStart: prog programaStart END_OF_FILE																						{success(); return 0;}
+		| prog END_OF_FILE		    																								{success(); return 0;}
 ;
 
-prog: declaration {}
-    | function     {}
+prog: declaration 																													{}
+    | function    																													{}
 ;
 
 declaration: NUMBER_SIGN DEFINE_T IDENTIFIER expression  																			{}
@@ -187,11 +193,11 @@ type: INT																															{}
 block: LCBRACK commands RCBRACK	{}
 ;
 
-commands: lista_comandos commands	{}
-		| lista_comandos			{}
+commands: command_list commands	{}
+		| command_list			{}
 ;
 
-lista_comandos: DO block WHILE LPAREN expression RPAREN SEMICOLON	                                								{}
+command_list: DO block WHILE LPAREN expression RPAREN SEMICOLON	                                									{}
 			  | IF LPAREN expression RPAREN block else_exp				                                							{}
 			  | WHILE LPAREN expression RPAREN block					                                							{}
 			  | FOR LPAREN optional_expression SEMICOLON optional_expression SEMICOLON optional_expression RPAREN block				{}
@@ -323,53 +329,48 @@ pointer: MULT 																														{}
 
 %%
 
+/*
+* Função responsável por lidar com os tokens que representam erros
+*/
 void yyerror(char *s)
 {
 	int i;
 
-	switch(yychar){
-
-		case UNTERMINATED_COMMENT:
-			printf("error:lexical:%d:%d: unterminated comment", total_lines, total_chars);
-			break;
-
-
-		case OTHER:
+	if(yychar == UNTERMINATED_COMMENT || yychar == OTHER)
+	{
+		printf("error:lexical:%d:", total_lines, total_chars);
+		if(yychar == UNTERMINATED_COMMENT)
+		{
+			printf("%d: unterminated comment", total_chars);
+		}
+		else
+		{
 			total_chars -= strlen(yytext);
-			printf("error:lexical:%d:%d: %s", total_lines, total_chars, yytext);
-			break;
+			printf("%d: %s", total_chars, yytext);
+		}
+	}
+	else
+	{	
+		printf("error:syntax:%d:", total_lines);
+		if(yychar == END_OF_FILE)
+		{
+			printf("%d: expected declaration or statement at end of input\n", total_chars);
+		}
+		else
+		{
+			total_chars -= strlen(yytext);
+			printf("%d: %s\n", total_chars, yytext);
+		}
+		printPosFinder(inputFile, total_lines);
 
-
-		case END_OF_FILE:
-			printf("error:syntax:%d:%d: expected declaration or statement at end of input\n", total_lines, total_chars);
-			printPosFinder(inputFile, total_lines);
-
-            i = 1;
-			while(i < total_chars)
-			{ 
-                printf(" "); 
+		i = 1;
+		while(i < total_chars)
+		{ 
+			printf(" "); 
 				i++;
-            }
+		}
 
-			printf("^");
-			break;
-
-		default:
-			total_chars -= strlen(yytext);
-			printf("error:syntax:%d:%d: %s\n", total_lines, total_chars, yytext);
-			printPosFinder(inputFile, total_lines);
-
-            i = 1;
-			while(i < total_chars)
-			{ 
-                printf(" "); 
-				 i++;
-            }
-
-			printf("^");
-			break;
-
-
+		printf("^");
 	}
 }
 
