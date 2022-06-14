@@ -33,12 +33,9 @@ void startAllocationProcess(RegisterAllocation* registerAllocation)
     for(int k = registerAllocation->physicalRegisters; k > 1; k--)
     {
         printf("K = %d\n\n", k);
-
         Stack* stack = simplifyGraph(registerAllocation->graph, k);
         results[k - 1] = selectGraph(registerAllocation->graph, stack, k);
-        
         printf("----------------------------------------\n");
-
         deleteStack(stack);
     }
 
@@ -54,7 +51,7 @@ void buildGraph(RegisterAllocation* registerAllocation)
 {
     registerAllocation->graph = createGraph();
 
-    int vertexId = -1;
+    int vertexId;
     while(fscanf(stdin, "%d -->", &vertexId) != EOF)
     {
         Vertex* vertex = createVertex(vertexId);
@@ -62,7 +59,7 @@ void buildGraph(RegisterAllocation* registerAllocation)
         char c = fgetc(stdin);
         while(c == ' ')
         {
-            int edgeNumber = -1;
+            int edgeNumber;
             fscanf(stdin, "%d", &edgeNumber);
             insertEdgeVertexGraph(vertex, edgeNumber);
             c = fgetc(stdin);
@@ -75,7 +72,8 @@ Stack* simplifyGraph(Graph* graph, int k)
 {
     Stack* stack = createStack();
 
-    for(int i = 0; i < graph->vertexNumber; i++)
+    int n = graph->vertexNumber;
+    for(int i = 0; i < n; i++)
     {
         // Vertices máximos e mínimos
         // For

@@ -28,10 +28,10 @@ Info popStack(Stack* stack)
         return NULL;
     }
 
-    Info poppedInfo = stack->last->info;
     StackNode* poppedNode = stack->last;
+    Info poppedInfo = poppedNode->info;
 
-    stack->last = poppedNode->previous;
+    stack->last = stack->last->previous;
 
     free(poppedNode);
     stack->size--;

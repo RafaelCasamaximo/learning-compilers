@@ -9,7 +9,8 @@ H_SOURCE=$(wildcard *.h)
 
 CC=gcc
 
-CC_FLAGS = -g
+CC_FLAGS = -g		\
+		 -std=c99    
 
 OBJ=$(C_SOURCE:.c=.o)
 
